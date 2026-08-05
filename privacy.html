@@ -141,7 +141,8 @@
 <ul>
   <li><strong>Selfies</strong>: discarded immediately after the one-time OpenAI analysis (never written to our durable storage; OpenAI may retain the API request up to 30 days for its own abuse monitoring, then deletes it)</li>
   <li><strong>Scan-activity record</strong> (device/account id, scan type, salted IP hash — never the image): up to 90 days, then auto-deleted</li>
-  <li><strong>Scan scores</strong>: retained for the life of your account; deleted on request</li>
+  <li><strong>Scan scores, routines and scan history</strong>: stored on your device — kept until you delete your data, delete your account, or remove the app. They are never persisted to our servers, so there is nothing on our side to retain</li>
+  <li><strong>Scan timeline thumbnail</strong>: stored on your device on the same basis as your scores above, and removed when you delete your data or your account</li>
   <li><strong>Diary entries</strong>: retained until you delete them or close your account</li>
   <li><strong>Subscription status</strong>: retained as long as required by tax + accounting law (typically 7 years post-termination)</li>
 </ul>
