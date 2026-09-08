@@ -16,6 +16,7 @@
 <meta name="twitter:description" content="A 10-second skin scan, honest 0–100 scores, and a K-beauty coach — real Korean brands only. Free first scan on iPhone.">
 <meta name="twitter:image" content="https://jineo.app/assets/og.png">
 <meta name="theme-color" content="#FFFCFA">
+<script>document.documentElement.classList.add("js")</script>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -178,8 +179,9 @@
   .sticky { display: none; }
 
   /* reveal on scroll (CSS-only fallback: visible) */
-  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
-  .reveal.in { opacity: 1; transform: none; }
+  /* reveal-on-scroll is opt-in: only when JS is present (html.js). No JS, crawlers, or a failed script → everything visible. */
+  html.js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  html.js .reveal.in { opacity: 1; transform: none; }
 
   @media (max-width: 960px) {
     .hero { grid-template-columns: 1fr; gap: 36px; padding-top: 40px; text-align: center; }
@@ -199,7 +201,7 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .tag, .pip, .scanline { animation: none; } .fill { animation: none; width: var(--w); }
-    .reveal { opacity: 1; transform: none; transition: none; } .device { transform: none; }
+    html.js .reveal { opacity: 1; transform: none; transition: none; } .device { transform: none; }
   }
 </style>
 </head>
