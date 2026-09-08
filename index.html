@@ -19,281 +19,362 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;900&family=DM+Serif+Display&family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;900&family=DM+Serif+Display&family=Noto+Sans+KR:wght@700&family=Space+Grotesk:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;900&family=DM+Serif+Display&family=Noto+Sans+KR:wght@700&family=Space+Grotesk:wght@700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;900&family=DM+Serif+Display&family=Noto+Sans+KR:wght@700&family=Space+Grotesk:wght@700&display=swap"></noscript>
 <style>
   /* ── Seoul Clinic tokens — mirrors the app's lib/tokens.ts ── */
   :root {
-    --g0: #FFFCFA;          /* living ground, top    */
-    --g1: #FCEFE6;          /* living ground, bottom */
-    --porcelain: #FFFEFB;
-    --hanji: #F7F4EE;
-    --ink: #171715;
-    --quiet: #6D6A64;
-    --pink: #EE5A84;        /* Seoul Pink — the one action colour */
-    --pink-deep: #C93E68;
-    --pink-text: #B03059;
-    --pink-glow: #FFE1EA;
-    --plum: #3A1F3F;
-    --gold: #C7A45A;
-    --match: #35685A;
+    --g0: #FFFCFA; --g1: #FCEFE6;
+    --porcelain: #FFFEFB; --hanji: #F7F4EE;
+    --ink: #171715; --quiet: #6D6A64;
+    --pink: #EE5A84; --pink-deep: #C93E68; --pink-text: #B03059; --pink-glow: #FFE1EA;
+    --plum: #3A1F3F; --navy: #221C26; --night: #17131A;   /* diagnostic navy: scan moments ONLY */
+    --gold: #C7A45A; --match: #35685A; --lavender: #B4A9C9;
     --sans: "DM Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
     --serif: "DM Serif Display", Georgia, "Times New Roman", serif;
+    --mono: "Space Grotesk", ui-monospace, Menlo, monospace;
     --kr: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+    --r: 22px;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    font-family: var(--sans);
-    color: var(--ink);
-    line-height: 1.55;
-    background: linear-gradient(180deg, var(--g0) 0%, var(--g1) 100%);
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-  }
-  /* the depth orbs from GradientBackdrop.tsx — pink top-left, gold bottom-right */
-  body::before {
-    content: "";
-    position: fixed; inset: 0; z-index: -1; pointer-events: none;
-    background:
-      radial-gradient(520px 520px at 8% 12%, rgba(238,90,132,0.30), transparent 62%),
-      radial-gradient(600px 600px at 94% 92%, rgba(199,164,90,0.24), transparent 62%);
-  }
+  body { margin: 0; font-family: var(--sans); color: var(--ink); line-height: 1.55; -webkit-font-smoothing: antialiased;
+    background: linear-gradient(180deg, var(--g0) 0%, var(--g1) 100%); min-height: 100vh; }
+  body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background: radial-gradient(560px 560px at 8% 10%, rgba(238,90,132,0.30), transparent 62%),
+                radial-gradient(640px 640px at 94% 94%, rgba(199,164,90,0.22), transparent 62%); }
   a { color: var(--pink-text); }
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .eyebrow { font-weight: 700; font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: var(--pink-text); margin: 0 0 14px; }
+  .eyebrow .kr { font-family: var(--kr); letter-spacing: .4em; margin-left: 10px; color: var(--quiet); }
+  h1, h2 { font-family: var(--serif); font-weight: 400; letter-spacing: -0.01em; }
+  h1 { font-size: clamp(46px, 6.4vw, 82px); line-height: 1.0; margin: 0 0 20px; }
+  h1 em, h2 em { font-style: normal; color: var(--pink); }
+  h2 { font-size: clamp(32px, 3.8vw, 48px); line-height: 1.08; margin: 0 0 10px; }
+  .sub { color: var(--quiet); font-size: 17px; margin: 0 0 30px; max-width: 640px; }
 
-  /* ── header ── */
-  header { padding: 22px 0 8px; }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
-  .brand svg { width: 40px; height: 40px; }
-  .wordmark { font-weight: 900; letter-spacing: .14em; font-size: 20px; }
-  .wordmark .kr { font-family: var(--kr); font-weight: 700; letter-spacing: .3em; color: var(--quiet); font-size: 12px; margin-left: 10px; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 20px; border-radius: 999px; text-decoration: none;
-    font-weight: 700; font-size: 15px; letter-spacing: .01em; white-space: nowrap;
-    transition: transform 160ms ease, box-shadow 160ms ease;
-  }
-  .btn-pink { background: var(--pink); color: var(--porcelain); box-shadow: 0 10px 28px rgba(238,90,132,0.28); }
-  .btn-pink:hover { transform: translateY(-1px); box-shadow: 0 14px 34px rgba(238,90,132,0.34); }
-  .btn-ghost { color: var(--ink); background: rgba(255,254,251,0.7); border: 1px solid rgba(23,23,21,0.08); }
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 999px; text-decoration: none;
+    font-weight: 700; font-size: 15px; white-space: nowrap; transition: transform 160ms ease, box-shadow 160ms ease; }
+  .btn-pink { background: var(--pink); color: var(--porcelain); box-shadow: 0 12px 30px rgba(238,90,132,0.30); }
+  .btn-pink:hover { transform: translateY(-1px); box-shadow: 0 16px 38px rgba(238,90,132,0.38); }
+  .btn-ghost { color: var(--ink); background: rgba(255,254,251,0.7); border: 1px solid rgba(23,23,21,0.10); }
   .btn-ghost:hover { transform: translateY(-1px); }
+  .btn-light { background: var(--porcelain); color: var(--ink); }
+  .btn-light:hover { transform: translateY(-1px); }
 
-  /* ── hero ── */
-  .hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; padding: 56px 0 24px; }
-  .kicker { font-weight: 700; font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: var(--pink-text); margin: 0 0 18px; }
-  .kicker .kr { font-family: var(--kr); letter-spacing: .4em; margin-left: 10px; color: var(--quiet); }
-  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 6.2vw, 78px); line-height: 1.02; letter-spacing: -0.01em; margin: 0 0 20px; }
-  h1 em { font-style: normal; color: var(--pink); }
-  .promise { font-size: 22px; line-height: 1.4; color: var(--ink); margin: 0 0 12px; font-weight: 500; }
-  .truth { font-size: 17px; color: var(--quiet); margin: 0 0 30px; max-width: 520px; }
-  .ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+  /* header */
+  header { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(14px); background: rgba(255,252,250,0.72); border-bottom: 1px solid rgba(23,23,21,0.05); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand svg { width: 38px; height: 38px; }
+  .wordmark { font-weight: 900; letter-spacing: .14em; font-size: 19px; }
+  .wordmark .kr { font-family: var(--kr); font-weight: 700; letter-spacing: .3em; color: var(--quiet); font-size: 12px; margin-left: 10px; }
+  nav.links { display: flex; gap: 22px; font-size: 14px; font-weight: 700; }
+  nav.links a { color: var(--ink); text-decoration: none; opacity: .75; } nav.links a:hover { opacity: 1; }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; padding: 64px 0 20px; }
+  .promise { font-size: 22px; line-height: 1.4; margin: 0 0 12px; font-weight: 500; }
+  .truth { font-size: 17px; color: var(--quiet); margin: 0 0 28px; max-width: 520px; }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
   .fine { font-size: 13px; color: var(--quiet); }
+  .proof { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 26px; padding-top: 22px; border-top: 1px solid rgba(23,23,21,0.08); }
+  .proof div { font-size: 13px; color: var(--quiet); } .proof b { display: block; font-family: var(--mono); font-size: 19px; color: var(--ink); letter-spacing: -.01em; }
   .device-wrap { position: relative; display: flex; justify-content: center; }
-  .device {
-    width: min(100%, 360px); max-height: 74vh; object-fit: cover; object-position: top; border-radius: 44px 44px 36px 36px;
-    box-shadow: 0 30px 80px rgba(58,31,63,0.22), 0 4px 16px rgba(58,31,63,0.10);
-    transform: rotate(-2.5deg);
-  }
-  .device-wrap .tag {
-    position: absolute; background: var(--porcelain); border: 1px solid rgba(23,23,21,0.06);
-    border-radius: 999px; padding: 8px 14px; font-size: 13px; font-weight: 700;
-    box-shadow: 0 8px 24px rgba(58,31,63,0.10);
-  }
-  .tag-a { left: 2%; top: 14%; } .tag-b { right: 0; bottom: 18%; }
-  .tag .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--pink); margin-right: 8px; vertical-align: middle; }
+  .device { width: min(100%, 360px); max-height: 640px; object-fit: cover; object-position: top; border-radius: 44px 44px 36px 36px;
+    box-shadow: 0 34px 90px rgba(58,31,63,0.24), 0 4px 16px rgba(58,31,63,0.10); transform: rotate(-2.5deg); }
+  .tag { position: absolute; background: var(--porcelain); border: 1px solid rgba(23,23,21,0.06); border-radius: 999px; padding: 8px 14px;
+    font-size: 13px; font-weight: 700; box-shadow: 0 8px 24px rgba(58,31,63,0.10); animation: float 6s ease-in-out infinite; }
+  .tag-a { left: 2%; top: 14%; } .tag-b { right: 0; bottom: 18%; animation-delay: -3s; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--pink); margin-right: 8px; vertical-align: middle; }
+  @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
 
-  /* ── reads strip ── */
-  .reads { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 28px 0 8px; }
-  .chip { padding: 9px 16px; border-radius: 999px; background: var(--pink-glow); color: var(--pink-text); font-weight: 700; font-size: 13px; letter-spacing: .01em; }
+  /* reads strip */
+  .reads { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 26px 0 6px; }
+  .chip { padding: 9px 16px; border-radius: 999px; background: var(--pink-glow); color: var(--pink-text); font-weight: 700; font-size: 13px; }
 
-  /* ── sections ── */
-  section { padding: 56px 0 8px; }
-  h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.1; margin: 0 0 8px; letter-spacing: -0.005em; }
-  .sub { color: var(--quiet); font-size: 17px; margin: 0 0 28px; max-width: 620px; }
+  section { padding: 64px 0 8px; }
 
+  /* ── THE SCAN — the one dark, clinical moment ── */
+  .scan { margin-top: 56px; border-radius: 34px; overflow: hidden; color: #F7F1E8; position: relative;
+    background: radial-gradient(900px 600px at 20% 0%, rgba(238,90,132,0.28), transparent 60%),
+                radial-gradient(700px 500px at 90% 100%, rgba(199,164,90,0.18), transparent 60%),
+                linear-gradient(160deg, var(--navy), var(--night)); }
+  .scan::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .18;
+    background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size: 44px 44px; mask-image: radial-gradient(60% 60% at 50% 50%, #000, transparent); }
+  .scan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 56px 48px; position: relative; z-index: 1; }
+  .scan h2 { color: #fff; } .scan .sub { color: rgba(247,241,232,0.72); }
+  .scan .eyebrow { color: var(--pink); } .scan .eyebrow .kr { color: rgba(247,241,232,0.55); }
+  .frame { position: relative; border-radius: 28px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.10); }
+  .frame img { width: 100%; height: auto; display: block; }
+  /* the line is the bottom 2px of a frame-height layer that starts one frame above; translateY(100%) walks it to the bottom — transform only, no layout */
+  .scanline { position: absolute; left: 0; right: 0; top: -100%; height: 100%; pointer-events: none; will-change: transform;
+    background: linear-gradient(to bottom, transparent calc(100% - 2px), rgba(238,90,132,0.95) calc(100% - 2px), rgba(238,90,132,0.95) 100%);
+    filter: drop-shadow(0 0 10px rgba(238,90,132,0.7)); animation: sweep 3.6s cubic-bezier(.4,0,.2,1) infinite alternate; }
+  @keyframes sweep { from { transform: translateY(6%) } to { transform: translateY(98%) } }
+  .bracket { position: absolute; width: 26px; height: 26px; border: 2px solid rgba(238,90,132,0.9); }
+  .bl-tl { left: 14px; top: 14px; border-right: 0; border-bottom: 0; } .bl-tr { right: 14px; top: 14px; border-left: 0; border-bottom: 0; }
+  .bl-bl { left: 14px; bottom: 14px; border-right: 0; border-top: 0; } .bl-br { right: 14px; bottom: 14px; border-left: 0; border-top: 0; }
+  .pip { position: absolute; padding: 6px 10px; border-radius: 999px; background: rgba(23,19,26,0.72); border: 1px solid rgba(255,255,255,0.14);
+    font-family: var(--mono); font-size: 12px; letter-spacing: .04em; color: #fff; animation: float 5s ease-in-out infinite; }
+  .pip i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--pink); margin-right: 7px; box-shadow: 0 0 10px var(--pink); }
+  .p1 { left: 6%; top: 22%; } .p2 { right: 6%; top: 40%; animation-delay: -1.6s; } .p3 { left: 8%; bottom: 26%; animation-delay: -2.8s; } .p4 { right: 8%; bottom: 12%; animation-delay: -0.9s; }
+  .metrics { display: grid; gap: 14px; margin-top: 26px; }
+  .metric { display: grid; grid-template-columns: 150px 1fr 52px; align-items: center; gap: 14px; font-size: 14px; }
+  .metric .kr { font-family: var(--kr); color: rgba(247,241,232,0.5); margin-left: 8px; font-size: 12px; }
+  .track { height: 8px; border-radius: 999px; background: rgba(255,255,255,0.10); overflow: hidden; }
+  .fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--pink), #FFB1C8); width: 0; animation: grow 1.6s cubic-bezier(.2,.8,.2,1) forwards; }
+  @keyframes grow { to { width: var(--w) } }
+  .metric b { font-family: var(--mono); text-align: right; }
+  .scan .note { font-size: 12px; color: rgba(247,241,232,0.5); margin-top: 18px; }
+
+  /* how it works */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .step { background: rgba(255,254,251,0.78); border: 1px solid rgba(23,23,21,0.06); border-radius: var(--r); padding: 26px 24px; }
+  .step .n { font-family: var(--serif); font-size: 44px; line-height: 1; color: var(--pink); margin-bottom: 12px; }
+  .step h3 { margin: 0 0 8px; font-size: 18px; } .step p { margin: 0; color: var(--quiet); font-size: 14.5px; }
+
+  /* pillars */
   .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .pillar {
-    background: rgba(255,254,251,0.78); border: 1px solid rgba(23,23,21,0.06); border-radius: 22px;
-    padding: 24px 22px 24px; backdrop-filter: blur(10px);
-    transition: transform 160ms ease, box-shadow 160ms ease;
-  }
+  .pillar { background: rgba(255,254,251,0.78); border: 1px solid rgba(23,23,21,0.06); border-radius: var(--r); padding: 24px 22px;
+    transition: transform 160ms ease, box-shadow 160ms ease; }
   .pillar:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(58,31,63,0.10); }
   .pillar .han { display: block; font-family: var(--kr); font-weight: 700; font-size: 11px; letter-spacing: .38em; color: var(--pink-text); margin-bottom: 12px; }
-  .pillar h3 { margin: 0 0 8px; font-size: 18px; letter-spacing: -0.005em; }
-  .pillar p { margin: 0; font-size: 14.5px; color: var(--quiet); }
+  .pillar h3 { margin: 0 0 8px; font-size: 18px; } .pillar p { margin: 0; font-size: 14.5px; color: var(--quiet); }
 
-  .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-  .shot { background: var(--porcelain); border: 1px solid rgba(23,23,21,0.06); border-radius: 22px; padding: 12px 12px 14px; }
+  /* gallery */
+  .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; align-items: start; }
+  .shot { background: var(--porcelain); border: 1px solid rgba(23,23,21,0.06); border-radius: var(--r); padding: 12px 12px 14px; transition: transform 160ms ease; }
+  .shot:hover { transform: translateY(-3px); }
   .shot img { width: 100%; height: auto; display: block; border-radius: 14px; }
   .shot figcaption { margin: 12px 4px 0; font-size: 13px; color: var(--quiet); font-weight: 500; }
   .shot figcaption b { color: var(--ink); display: block; font-size: 14px; }
 
+  /* honesty */
   .honest { background: var(--plum); color: #F7F1E8; border-radius: 28px; padding: 40px 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
-  .honest h3 { margin: 0 0 8px; font-size: 18px; color: #fff; }
-  .honest p { margin: 0; font-size: 14.5px; color: rgba(247,241,232,0.78); }
+  .honest h3 { margin: 0 0 8px; font-size: 18px; color: #fff; } .honest p { margin: 0; font-size: 14.5px; color: rgba(247,241,232,0.78); }
   .honest .num { font-family: var(--serif); font-size: 40px; line-height: 1; color: var(--pink); margin-bottom: 10px; }
 
-  .final { text-align: center; padding: 72px 0 24px; }
-  .final h2 { margin-bottom: 14px; }
-  .price { color: var(--quiet); font-size: 14px; margin-top: 16px; }
+  /* faq */
+  .faq { max-width: 760px; }
+  details { border-bottom: 1px solid rgba(23,23,21,0.08); padding: 6px 0; }
+  summary { cursor: pointer; list-style: none; font-weight: 700; font-size: 16px; padding: 14px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--mono); color: var(--pink); font-size: 22px; line-height: 1; }
+  details[open] summary::after { content: "–"; }
+  details p { margin: 0 0 16px; color: var(--quiet); font-size: 15px; }
 
-  footer { text-align: center; padding: 48px 24px 56px; color: var(--quiet); font-size: 13px; }
-  footer a { color: var(--pink-text); text-decoration: none; margin: 0 10px; font-weight: 600; }
-  footer a:hover { text-decoration: underline; }
+  .final { text-align: center; padding: 76px 0 24px; }
+  .price { color: var(--quiet); font-size: 14px; margin-top: 16px; }
+  footer { text-align: center; padding: 48px 24px 96px; color: var(--quiet); font-size: 13px; }
+  footer a { color: var(--pink-text); text-decoration: none; margin: 0 10px; font-weight: 600; } footer a:hover { text-decoration: underline; }
   .seal { margin-top: 22px; font-family: var(--kr); color: var(--pink-text); font-weight: 700; letter-spacing: 12px; font-size: 13px; }
 
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; gap: 36px; padding-top: 36px; text-align: center; }
-    .truth, .promise { margin-left: auto; margin-right: auto; }
-    .ctas { justify-content: center; }
-    .pillars { grid-template-columns: 1fr 1fr; }
-    .gallery { grid-template-columns: 1fr 1fr; }
-    .honest { grid-template-columns: 1fr; padding: 32px 26px; }
+  /* mobile sticky CTA */
+  .sticky { display: none; }
+
+  /* reveal on scroll (CSS-only fallback: visible) */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; gap: 36px; padding-top: 40px; text-align: center; }
+    .truth, .promise { margin-left: auto; margin-right: auto; } .ctas { justify-content: center; } .proof { text-align: left; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .scan-grid { grid-template-columns: 1fr; padding: 36px 26px; }
+    .steps, .pillars { grid-template-columns: 1fr 1fr; } .gallery { grid-template-columns: 1fr 1fr; }
+    .honest { grid-template-columns: 1fr; padding: 32px 26px; } nav.links { display: none; }
   }
-  @media (max-width: 560px) {
-    .pillars { grid-template-columns: 1fr; }
-    .wordmark .kr, .kicker .kr { display: none; }
-    .device { width: min(100%, 300px); }
+  @media (max-width: 600px) {
+    .steps, .pillars { grid-template-columns: 1fr; } .wordmark .kr, .eyebrow .kr { display: none; }
+    .device { width: min(100%, 300px); } .metric { grid-template-columns: 120px 1fr 44px; }
+    .sticky { display: flex; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; justify-content: center; }
+    .sticky .btn { width: 100%; justify-content: center; }
   }
-  @media (prefers-reduced-motion: reduce) { .btn, .pillar { transition: none; } .device { transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .tag, .pip, .scanline { animation: none; } .fill { animation: none; width: var(--w); }
+    .reveal { opacity: 1; transform: none; transition: none; } .device { transform: none; }
+  }
 </style>
 </head>
 <body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="Jineo home">
+      <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <radialGradient id="body" cx="0.36" cy="0.28" r="0.82"><stop offset="0" stop-color="#F7DBCE"/><stop offset="0.55" stop-color="#EDA899"/><stop offset="1" stop-color="#C76D79"/></radialGradient>
+          <radialGradient id="gloss" cx="0.30" cy="0.22" r="0.28"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.58"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+          <linearGradient id="leaf" x1="0.1" y1="0.1" x2="0.9" y2="0.9"><stop offset="0" stop-color="#A6BF8C"/><stop offset="0.55" stop-color="#7A9868"/><stop offset="1" stop-color="#4F6F40"/></linearGradient>
+        </defs>
+        <path d="M 512 195 C 512 165, 522 135, 552 112" stroke="#6B4A2F" stroke-width="18" stroke-linecap="round" fill="none"/>
+        <g transform="translate(618 118) rotate(28)"><path d="M 0 0 C 40 -26, 120 -22, 160 14 C 130 42, 60 48, 0 0 Z" fill="url(#leaf)"/></g>
+        <path d="M 512 200 C 332 200, 140 320, 140 570 C 140 810, 295 955, 512 955 C 729 955, 884 810, 884 570 C 884 320, 692 200, 512 200 Z" fill="url(#body)"/>
+        <ellipse cx="356" cy="400" rx="160" ry="108" fill="url(#gloss)"/>
+        <path d="M 345 560 C 372 524, 422 524, 449 560" stroke="#3F1C2C" stroke-width="20" stroke-linecap="round" fill="none"/>
+        <path d="M 575 560 C 602 524, 652 524, 679 560" stroke="#3F1C2C" stroke-width="20" stroke-linecap="round" fill="none"/>
+        <path d="M 458 730 Q 512 758, 566 730" stroke="#3F1C2C" stroke-width="18" stroke-linecap="round" fill="none"/>
+        <circle cx="318" cy="680" r="42" fill="#B85C7A" fill-opacity="0.30"/><circle cx="706" cy="680" r="42" fill="#B85C7A" fill-opacity="0.30"/>
+      </svg>
+      <span class="wordmark">JINEO<span class="kr">진어</span></span>
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#scan">The scan</a><a href="#how">How it works</a><a href="#see">Screens</a><a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Get the app</a>
+  </div>
+</header>
+
 <div class="wrap">
+<main>
 
-  <header>
-    <div class="bar">
-      <a class="brand" href="/" aria-label="Jineo home">
-        <!-- Bok — the mark, unchanged -->
-        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <radialGradient id="body" cx="0.36" cy="0.28" r="0.82"><stop offset="0" stop-color="#F7DBCE"/><stop offset="0.55" stop-color="#EDA899"/><stop offset="1" stop-color="#C76D79"/></radialGradient>
-            <radialGradient id="gloss" cx="0.30" cy="0.22" r="0.28"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.58"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
-            <linearGradient id="leaf" x1="0.1" y1="0.1" x2="0.9" y2="0.9"><stop offset="0" stop-color="#A6BF8C"/><stop offset="0.55" stop-color="#7A9868"/><stop offset="1" stop-color="#4F6F40"/></linearGradient>
-          </defs>
-          <path d="M 512 195 C 512 165, 522 135, 552 112" stroke="#6B4A2F" stroke-width="18" stroke-linecap="round" fill="none"/>
-          <g transform="translate(618 118) rotate(28)"><path d="M 0 0 C 40 -26, 120 -22, 160 14 C 130 42, 60 48, 0 0 Z" fill="url(#leaf)"/></g>
-          <path d="M 512 200 C 332 200, 140 320, 140 570 C 140 810, 295 955, 512 955 C 729 955, 884 810, 884 570 C 884 320, 692 200, 512 200 Z" fill="url(#body)"/>
-          <ellipse cx="356" cy="400" rx="160" ry="108" fill="url(#gloss)"/>
-          <path d="M 345 560 C 372 524, 422 524, 449 560" stroke="#3F1C2C" stroke-width="20" stroke-linecap="round" fill="none"/>
-          <path d="M 575 560 C 602 524, 652 524, 679 560" stroke="#3F1C2C" stroke-width="20" stroke-linecap="round" fill="none"/>
-          <path d="M 458 730 Q 512 758, 566 730" stroke="#3F1C2C" stroke-width="18" stroke-linecap="round" fill="none"/>
-          <circle cx="318" cy="680" r="42" fill="#B85C7A" fill-opacity="0.30"/><circle cx="706" cy="680" r="42" fill="#B85C7A" fill-opacity="0.30"/>
-        </svg>
-        <span class="wordmark">JINEO<span class="kr">진어</span></span>
-      </a>
-      <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Get the app</a>
-    </div>
-  </header>
-
-  <!-- ── hero ── -->
-  <main>
   <section class="hero" style="padding-top:44px">
     <div>
-      <p class="kicker">10-second skin scan <span class="kr">한 · 뷰티</span></p>
+      <p class="eyebrow">10-second skin scan <span class="kr">한 · 뷰티</span></p>
       <h1>Korean skincare,<br><em>decoded.</em></h1>
       <p class="promise">Buy less. Choose better. Build a routine that works.</p>
       <p class="truth">One selfie reads your skin — Skin Type 16, 12-tone Personal Color, water–oil map, pores and marks by zone — then scores real Korean products honestly. Scan any label. Every skin tone.</p>
       <div class="ctas">
         <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Free first scan on iPhone →</a>
-        <a class="btn btn-ghost" href="#see">See it work</a>
+        <a class="btn btn-ghost" href="#scan">Watch it read skin</a>
       </div>
       <p class="fine">Free first scan · Pro $5.99/wk or $79.99/yr · 3-day free trial on annual</p>
+      <div class="proof">
+        <div><b>~10s</b>one selfie, one read</div>
+        <div><b>16</b>Korean skin types</div>
+        <div><b>12</b>Personal Color tones</div>
+        <div><b>120+</b>real Korean brands</div>
+      </div>
     </div>
     <div class="device-wrap">
-      <picture>
-        <source srcset="/assets/hero-device.webp" type="image/webp">
-        <img class="device" src="/assets/hero-device.webp" width="876" height="1219" alt="Jineo skin scan on iPhone — zone scores for forehead, T-zone and cheeks, hydration level, and an honest 0–100 glass-skin score" loading="eager">
-      </picture>
+      <img class="device" src="/assets/hero-device.webp" width="876" height="1219" alt="Jineo skin scan on iPhone — zone scores for forehead, T-zone and cheeks, hydration level, and an honest 0–100 glass-skin score" loading="eager">
       <span class="tag tag-a"><span class="dot"></span>Scan · about 10 seconds</span>
       <span class="tag tag-b"><span class="dot"></span>Honest 0–100, no paid rankings</span>
     </div>
   </section>
 
   <div class="reads" aria-label="What the scan reads">
-    <span class="chip">Skin Type 16</span>
-    <span class="chip">12-tone Personal Color</span>
-    <span class="chip">Water–oil map</span>
-    <span class="chip">Pores · marks · redness by zone</span>
-    <span class="chip">Your gwang goal</span>
+    <span class="chip">Skin Type 16</span><span class="chip">12-tone Personal Color</span><span class="chip">Water–oil map</span><span class="chip">Pores · marks · redness by zone</span><span class="chip">Your gwang goal</span>
   </div>
 
-  <!-- ── pillars ── -->
-  <section>
-    <h2>What Jineo does</h2>
-    <p class="sub">Korean beauty standards, read against <em>your</em> skin — then applied to the products on the shelf in front of you.</p>
-    <div class="pillars">
-      <div class="pillar">
-        <span class="han">스킨 타입 16 · 진단</span>
-        <h3>Your Korean Skin ID</h3>
-        <p>One selfie → a 4-letter Skin Type 16 read, independent water and oil axes, and the gwang glow your skin can actually chase.</p>
+  <!-- ── THE SCAN ── -->
+  <section id="scan" class="scan reveal">
+    <div class="scan-grid">
+      <div class="frame">
+        <img src="/assets/scan-face.webp" width="580" height="855" alt="Sample skin read — zone annotations over a face: forehead, T-zone, cheek, hydration" loading="lazy">
+        <div class="scanline"></div>
+        <span class="bracket bl-tl"></span><span class="bracket bl-tr"></span><span class="bracket bl-bl"></span><span class="bracket bl-br"></span>
+        <span class="pip p1"><i></i>FOREHEAD · 88</span>
+        <span class="pip p2"><i></i>T-ZONE · 90</span>
+        <span class="pip p3"><i></i>CHEEK · 92</span>
+        <span class="pip p4"><i></i>HYDRATED · 86%</span>
       </div>
-      <div class="pillar">
-        <span class="han">개인 컬러 · 12 톤</span>
-        <h3>Personal Color salon</h3>
-        <p>A salon-style 12-tone read — Spring / Summer / Autumn / Winter × Light / Bright / True / Mute / Deep — from the same selfie.</p>
-      </div>
-      <div class="pillar">
-        <span class="han">성분 스캔 · 라벨</span>
-        <h3>Scan any label</h3>
-        <p>Point the camera at an ingredient list. Each ingredient is graded against your profile — what matches your barrier today, and what doesn’t.</p>
-      </div>
-      <div class="pillar">
-        <span class="han">정직한 점수 · 0–100</span>
-        <h3>Honest scores, real brands</h3>
-        <p>120+ real Korean products — Beauty of Joseon, Anua, Cosrx, Sulwhasoo — scored 0–100 against your scan. Nobody can pay for a better number.</p>
-      </div>
-      <div class="pillar">
-        <span class="han">하나 · 코치</span>
-        <h3>Hana, your K-beauty coach</h3>
-        <p>Korean editorial standards and Hanbang tradition in chat: layering questions, first-serum picks, glass-skin plans — and a roast of the routine you paste in.</p>
-      </div>
-      <div class="pillar">
-        <span class="han">복 · 글로우 무비</span>
-        <h3>Bok, and your Glow Movie</h3>
-        <p>복 means luck. Your peach sidekick marks each ritual, keeps the streak honest, and turns your skin journey into a 6-second reel worth sending.</p>
+      <div>
+        <p class="eyebrow">The scan <span class="kr">스캔 · 10초</span></p>
+        <h2>Ten seconds.<br>Six reads. <em>Zero guessing.</em></h2>
+        <p class="sub">A vision model reads cosmetic skin signals from one selfie — by facial zone, on Korean frameworks — and hands you a number you can act on.</p>
+        <div class="metrics" aria-label="Sample read">
+          <div class="metric"><span>Hydration<span class="kr">수분</span></span><div class="track"><div class="fill" style="--w:86%"></div></div><b>86</b></div>
+          <div class="metric"><span>Barrier<span class="kr">장벽</span></span><div class="track"><div class="fill" style="--w:78%"></div></div><b>78</b></div>
+          <div class="metric"><span>Glow<span class="kr">광</span></span><div class="track"><div class="fill" style="--w:92%"></div></div><b>92</b></div>
+          <div class="metric"><span>Pores<span class="kr">모공</span></span><div class="track"><div class="fill" style="--w:71%"></div></div><b>71</b></div>
+        </div>
+        <p class="note">Sample read from the App Store listing. Cosmetic signals only — not a diagnosis. Your selfie is analyzed once and never stored.</p>
       </div>
     </div>
   </section>
 
-  <!-- ── see it ── -->
+  <!-- ── HOW IT WORKS ── -->
+  <section id="how">
+    <p class="eyebrow">How it works</p>
+    <h2>Scan. Read. <em>Choose.</em></h2>
+    <p class="sub">Three steps between “what is my skin” and “what should I actually buy.”</p>
+    <div class="steps">
+      <div class="step reveal"><div class="n">1</div><h3>Scan</h3><p>One selfie, about ten seconds. Explicit consent every time, never identified, never stored on our servers.</p></div>
+      <div class="step reveal"><div class="n">2</div><h3>Read</h3><p>Your Skin Type 16, 12-tone Personal Color, water–oil axes and zone-by-zone signals — on the frameworks Korean skincare actually uses.</p></div>
+      <div class="step reveal"><div class="n">3</div><h3>Choose</h3><p>Real Korean products scored 0–100 against <em>your</em> read. Point the camera at any label and see what fits. Ask Hana anything.</p></div>
+    </div>
+  </section>
+
+  <!-- ── PILLARS ── -->
+  <section>
+    <p class="eyebrow">What Jineo does</p>
+    <h2>Korean beauty standards, read against <em>your</em> skin.</h2>
+    <p class="sub">Then applied to the products on the shelf in front of you.</p>
+    <div class="pillars">
+      <div class="pillar reveal"><span class="han">스킨 타입 16 · 진단</span><h3>Your Korean Skin ID</h3><p>One selfie → a 4-letter Skin Type 16 read, independent water and oil axes, and the gwang glow your skin can actually chase.</p></div>
+      <div class="pillar reveal"><span class="han">개인 컬러 · 12 톤</span><h3>Personal Color salon</h3><p>A salon-style 12-tone read — Spring / Summer / Autumn / Winter × Light / Bright / True / Mute / Deep — from the same selfie.</p></div>
+      <div class="pillar reveal"><span class="han">성분 스캔 · 라벨</span><h3>Scan any label</h3><p>Point the camera at an ingredient list. Each ingredient is graded against your profile — what matches your barrier today, and what doesn’t.</p></div>
+      <div class="pillar reveal"><span class="han">정직한 점수 · 0–100</span><h3>Honest scores, real brands</h3><p>120+ real Korean products — Beauty of Joseon, Anua, Cosrx, Sulwhasoo — scored 0–100 against your scan. Nobody can pay for a better number.</p></div>
+      <div class="pillar reveal"><span class="han">하나 · 코치</span><h3>Hana, your K-beauty coach</h3><p>Korean editorial standards and Hanbang tradition in chat: layering questions, first-serum picks, glass-skin plans — and a roast of the routine you paste in.</p></div>
+      <div class="pillar reveal"><span class="han">복 · 글로우 무비</span><h3>Bok, and your Glow Movie</h3><p>복 means luck. Your peach sidekick marks each ritual, keeps the streak honest, and turns your skin journey into a 6-second reel worth sending.</p></div>
+    </div>
+  </section>
+
+  <!-- ── SCREENS ── -->
   <section id="see">
-    <h2>See it, not a mock-up</h2>
-    <p class="sub">Real screens from the app on the App Store today.</p>
+    <p class="eyebrow">Real screens</p>
+    <h2>See it, not a mock-up.</h2>
+    <p class="sub">Straight from the app on the App Store today.</p>
     <div class="gallery">
-      <figure class="shot"><img src="/assets/shot-product.webp" width="720" height="961" alt="A Korean product scored against your skin profile" loading="lazy"><figcaption><b>Product, scored</b>Against your scan, not a paid ranking.</figcaption></figure>
-      <figure class="shot"><img src="/assets/shot-skintype.webp" width="720" height="1558" alt="Skin Type 16 result screen" loading="lazy"><figcaption><b>Skin Type 16</b>Your four letters, explained.</figcaption></figure>
-      <figure class="shot"><img src="/assets/shot-hana.webp" width="720" height="1558" alt="Hana coach chat screen" loading="lazy"><figcaption><b>Hana</b>Ask about layering, in plain language.</figcaption></figure>
-      <figure class="shot"><img src="/assets/shot-glow.webp" width="720" height="1558" alt="Glow Movie progress arc screen" loading="lazy"><figcaption><b>Glow Movie</b>Your journey, as a 6-second reel.</figcaption></figure>
+      <figure class="shot reveal"><img src="/assets/shot-product.webp" width="720" height="961" alt="A Korean product scored against your skin profile" loading="lazy"><figcaption><b>Product, scored</b>Against your scan, not a paid ranking.</figcaption></figure>
+      <figure class="shot reveal"><img src="/assets/shot-skintype.webp" width="720" height="1558" alt="Skin Type 16 result screen" loading="lazy"><figcaption><b>Skin Type 16</b>Your four letters, explained.</figcaption></figure>
+      <figure class="shot reveal"><img src="/assets/shot-hana.webp" width="720" height="1558" alt="Hana coach chat screen" loading="lazy"><figcaption><b>Hana</b>Ask about layering, in plain language.</figcaption></figure>
+      <figure class="shot reveal"><img src="/assets/shot-glow.webp" width="720" height="1558" alt="Glow Movie progress arc screen" loading="lazy"><figcaption><b>Glow Movie</b>Your journey, as a 6-second reel.</figcaption></figure>
     </div>
 
-    <div class="honest">
-      <div><div class="num">0</div><h3>Paid placements</h3><p>No sponsored rankings, no brand can buy a score. The number is the number.</p></div>
-      <div><div class="num">1×</div><h3>Your selfie is analyzed once</h3><p>Then it’s gone — never stored on our servers, never sold.</p></div>
+    <div class="honest reveal">
+      <div><div class="num">0</div><h3>Paid placements</h3><p>No sponsored rankings, no brand can buy a score. Product links may earn us a commission — commissions never touch scores.</p></div>
+      <div><div class="num">1×</div><h3>Your selfie is analyzed once</h3><p>Explicit consent before every scan. Never identified, never stored on our servers, never sold. No “looks score,” ever.</p></div>
       <div><div class="num">~10s</div><h3>Cosmetic signals, not a diagnosis</h3><p>Jineo reads skin signals and suggests cosmetic routines. It isn’t a medical device and doesn’t diagnose or treat anything.</p></div>
     </div>
   </section>
 
-  <!-- ── final CTA ── -->
+  <!-- ── FAQ ── -->
+  <section id="faq">
+    <p class="eyebrow">Questions</p>
+    <h2>The honest FAQ.</h2>
+    <div class="faq">
+      <details><summary>How does the skin scan work?</summary><p>You take one selfie. It’s analyzed once by an AI vision model to read cosmetic skin signals — hydration and oil balance, pore zones, marks and redness by facial zone, and tone for Personal Color. Your selfie is never stored on our servers.</p></details>
+      <details><summary>What is Skin Type 16?</summary><p>Our Korean-named skin identity system, built on the dermatologist-developed Baumann framework used in Korean skincare research. Four axes — Dry/Oily · Sensitive/Resistant · Pigment-prone/Non-pigmented · Wrinkle-prone/Tight — give you a 4-letter type and its Korean name.</p></details>
+      <details><summary>Are the scores sponsored or paid by brands?</summary><p>No. Zero paid rankings, zero sponsored scores. No brand can pay for placement or a better number, anywhere in the app. Product links may earn us an affiliate commission at no extra cost to you — commissions never touch scores.</p></details>
+      <details><summary>Is Jineo free?</summary><p>The first scan is free. Jineo Pro — re-scans, the Hana coach, Routine Roast, cycle tuning — is $5.99/week or $79.99/year with a 3-day free trial on annual. Managed through your Apple ID; cancel anytime.</p></details>
+      <details><summary>Does Jineo diagnose acne or skin conditions?</summary><p>No. Jineo reads cosmetic signals and suggests cosmetic routines — it doesn’t diagnose, treat, or cure anything. For persistent or concerning skin issues, please see a licensed dermatologist.</p></details>
+      <details><summary>Is my selfie stored? Is it private?</summary><p>Your selfie is analyzed once and never stored on our servers or sold. We ask explicit consent before every scan, never identify faces, and never produce a “looks score.” Full details in the <a href="/privacy.html">privacy policy</a>.</p></details>
+    </div>
+    <p class="sub" style="margin-top:18px"><a href="/faq.html">All questions →</a></p>
+  </section>
+
   <section class="final">
-    <h2>Stop guessing. <em style="font-style:normal;color:var(--pink)">Scan.</em></h2>
+    <h2>Stop guessing. <em>Scan.</em></h2>
     <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Download Jineo — free first scan →</a>
     <p class="price">Pro $5.99/week or $79.99/year · 3-day free trial on annual · cancel anytime</p>
     <div class="seal">진</div>
   </section>
-  </main>
 
+</main>
 </div>
 
 <footer>
-  <a href="/privacy.html">Privacy Policy</a>
-  <a href="/terms.html">Terms of Service</a>
-  <a href="/support.html">Support</a>
-  <a href="/press.html">Press</a>
-  <a href="/faq.html">FAQ</a>
+  <a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/support.html">Support</a><a href="/press.html">Press</a><a href="/faq.html">FAQ</a>
   <div style="margin-top:16px; font-size:12px; opacity:0.72;">© 2026 Universal AI LLC</div>
 </footer>
+
+<div class="sticky"><a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Free first scan on iPhone →</a></div>
+
+<script>
+  // reveal-on-scroll; harmless without JS (elements stay visible via reduced-motion or if IO is missing)
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (e) { io.observe(e); });
+  })();
+</script>
 </body>
 </html>
