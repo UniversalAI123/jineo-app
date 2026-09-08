@@ -3,263 +3,287 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jineo — Korean Skin Scan for iPhone</title>
-<meta name="description" content="The Korean skincare AI for Americans. One-selfie skin scan, Skin Type 16, 12-tone Personal Color, Hana K-beauty coach, honest 0–100 scores — real Korean brands only.">
-<meta property="og:title" content="Jineo — Korean Skin Scan for iPhone">
-<meta property="og:description" content="Korean skincare AI for Americans. One-selfie skin scan, Skin Type 16, 12-tone Personal Color, Hana K-beauty coach, honest 0–100 scores.">
-<meta property="og:image" content="https://jineo.app/og-invite.png">
+<title>Jineo — Korean skincare, decoded. A 10-second skin scan for iPhone</title>
+<meta name="description" content="One selfie → Skin Type 16, 12-tone Personal Color and honest 0–100 scores on real Korean products. Scan any label. No paid rankings. Free first scan on iPhone.">
+<meta property="og:title" content="Jineo — Korean skincare, decoded.">
+<meta property="og:description" content="A 10-second skin scan, honest 0–100 scores, and a K-beauty coach — real Korean brands only. Free first scan on iPhone.">
+<meta property="og:image" content="https://jineo.app/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:url" content="https://jineo.app/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Jineo — Korean Skin Scan for iPhone">
-<meta name="twitter:description" content="Korean skincare AI for Americans. One-selfie skin scan, Skin Type 16, 12-tone Personal Color, Hana K-beauty coach, honest 0–100 scores.">
-<meta name="twitter:image" content="https://jineo.app/og-invite.png">
+<meta name="twitter:title" content="Jineo — Korean skincare, decoded.">
+<meta name="twitter:description" content="A 10-second skin scan, honest 0–100 scores, and a K-beauty coach — real Korean brands only. Free first scan on iPhone.">
+<meta name="twitter:image" content="https://jineo.app/assets/og.png">
+<meta name="theme-color" content="#FFFCFA">
 <link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;900&family=DM+Serif+Display&family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
 <style>
+  /* ── Seoul Clinic tokens — mirrors the app's lib/tokens.ts ── */
   :root {
-    --bg: #FAF7F2;
-    --bg-deep: #F0E8DC;
-    --ink: #1A1715;
-    --ink-soft: #5C4A42;
-    --peach: #E07788;
-    --peach-deep: #B04268;
-    --gold: #C9A961;
-    --gold-deep: #8C6B3A;
-    --celadon: #6F9168;
+    --g0: #FFFCFA;          /* living ground, top    */
+    --g1: #FCEFE6;          /* living ground, bottom */
+    --porcelain: #FFFEFB;
+    --hanji: #F7F4EE;
+    --ink: #171715;
+    --quiet: #6D6A64;
+    --pink: #EE5A84;        /* Seoul Pink — the one action colour */
+    --pink-deep: #C93E68;
+    --pink-text: #B03059;
+    --pink-glow: #FFE1EA;
+    --plum: #3A1F3F;
+    --gold: #C7A45A;
+    --match: #35685A;
+    --sans: "DM Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    --serif: "DM Serif Display", Georgia, "Times New Roman", serif;
+    --kr: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "DM Sans", "Segoe UI", Roboto, sans-serif;
     margin: 0;
-    background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+    font-family: var(--sans);
     color: var(--ink);
-    line-height: 1.6;
+    line-height: 1.55;
+    background: linear-gradient(180deg, var(--g0) 0%, var(--g1) 100%);
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
-  .mascot {
-    width: 220px;
-    height: 220px;
-    display: block;
-    margin: 0 auto 24px;
-    filter: drop-shadow(0 10px 28px rgba(176, 66, 104, 0.18));
+  /* the depth orbs from GradientBackdrop.tsx — pink top-left, gold bottom-right */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(520px 520px at 8% 12%, rgba(238,90,132,0.30), transparent 62%),
+      radial-gradient(600px 600px at 94% 92%, rgba(199,164,90,0.24), transparent 62%);
   }
-  .kicker {
-    text-align: center;
-    letter-spacing: 14px;
-    color: var(--gold-deep);
-    font-weight: 700;
-    font-size: 13px;
-    margin-bottom: 8px;
+  a { color: var(--pink-text); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── header ── */
+  header { padding: 22px 0 8px; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand svg { width: 40px; height: 40px; }
+  .wordmark { font-weight: 900; letter-spacing: .14em; font-size: 20px; }
+  .wordmark .kr { font-family: var(--kr); font-weight: 700; letter-spacing: .3em; color: var(--quiet); font-size: 12px; margin-left: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px; border-radius: 999px; text-decoration: none;
+    font-weight: 700; font-size: 15px; letter-spacing: .01em; white-space: nowrap;
+    transition: transform 160ms ease, box-shadow 160ms ease;
   }
-  h1 {
-    text-align: center;
-    font-size: 56px;
-    line-height: 1.05;
-    letter-spacing: -2px;
-    margin: 0 0 16px;
-    font-weight: 900;
+  .btn-pink { background: var(--pink); color: var(--porcelain); box-shadow: 0 10px 28px rgba(238,90,132,0.28); }
+  .btn-pink:hover { transform: translateY(-1px); box-shadow: 0 14px 34px rgba(238,90,132,0.34); }
+  .btn-ghost { color: var(--ink); background: rgba(255,254,251,0.7); border: 1px solid rgba(23,23,21,0.08); }
+  .btn-ghost:hover { transform: translateY(-1px); }
+
+  /* ── hero ── */
+  .hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; padding: 56px 0 24px; }
+  .kicker { font-weight: 700; font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: var(--pink-text); margin: 0 0 18px; }
+  .kicker .kr { font-family: var(--kr); letter-spacing: .4em; margin-left: 10px; color: var(--quiet); }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 6.2vw, 78px); line-height: 1.02; letter-spacing: -0.01em; margin: 0 0 20px; }
+  h1 em { font-style: normal; color: var(--pink); }
+  .promise { font-size: 22px; line-height: 1.4; color: var(--ink); margin: 0 0 12px; font-weight: 500; }
+  .truth { font-size: 17px; color: var(--quiet); margin: 0 0 30px; max-width: 520px; }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+  .fine { font-size: 13px; color: var(--quiet); }
+  .device-wrap { position: relative; display: flex; justify-content: center; }
+  .device {
+    width: min(100%, 360px); max-height: 74vh; object-fit: cover; object-position: top; border-radius: 44px 44px 36px 36px;
+    box-shadow: 0 30px 80px rgba(58,31,63,0.22), 0 4px 16px rgba(58,31,63,0.10);
+    transform: rotate(-2.5deg);
   }
-  @media (max-width: 600px) {
-    h1 { font-size: 40px; letter-spacing: -1.5px; }
-    .mascot { width: 160px; height: 160px; }
+  .device-wrap .tag {
+    position: absolute; background: var(--porcelain); border: 1px solid rgba(23,23,21,0.06);
+    border-radius: 999px; padding: 8px 14px; font-size: 13px; font-weight: 700;
+    box-shadow: 0 8px 24px rgba(58,31,63,0.10);
   }
-  .lede {
-    text-align: center;
-    font-size: 20px;
-    color: var(--ink-soft);
-    margin: 0 auto 48px;
-    max-width: 520px;
-  }
-  .badges {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 64px;
-  }
-  .badge {
-    padding: 10px 18px;
-    border-radius: 999px;
-    background: rgba(224, 119, 136, 0.10);
-    border: 1px solid rgba(224, 119, 136, 0.28);
-    color: var(--peach-deep);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-  }
-  .pillars {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    margin-bottom: 64px;
-  }
-  @media (min-width: 640px) {
-    .pillars { grid-template-columns: 1fr 1fr; }
-  }
+  .tag-a { left: 2%; top: 14%; } .tag-b { right: 0; bottom: 18%; }
+  .tag .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--pink); margin-right: 8px; vertical-align: middle; }
+
+  /* ── reads strip ── */
+  .reads { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 28px 0 8px; }
+  .chip { padding: 9px 16px; border-radius: 999px; background: var(--pink-glow); color: var(--pink-text); font-weight: 700; font-size: 13px; letter-spacing: .01em; }
+
+  /* ── sections ── */
+  section { padding: 56px 0 8px; }
+  h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.1; margin: 0 0 8px; letter-spacing: -0.005em; }
+  .sub { color: var(--quiet); font-size: 17px; margin: 0 0 28px; max-width: 620px; }
+
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .pillar {
-    background: rgba(255,255,255,0.55);
-    border: 1px solid rgba(26,23,21,0.06);
-    border-radius: 18px;
-    padding: 22px 22px 24px;
-    backdrop-filter: blur(8px);
+    background: rgba(255,254,251,0.78); border: 1px solid rgba(23,23,21,0.06); border-radius: 22px;
+    padding: 24px 22px 24px; backdrop-filter: blur(10px);
+    transition: transform 160ms ease, box-shadow 160ms ease;
   }
-  .pillar h3 {
-    margin: 0 0 6px;
-    font-size: 17px;
-    letter-spacing: 0.2px;
-    color: var(--ink);
-  }
-  .pillar p {
-    margin: 0;
-    font-size: 14.5px;
-    color: var(--ink-soft);
-  }
-  .pillar .han {
-    display: inline-block;
-    font-family: "Noto Sans KR", serif;
-    font-weight: 700;
-    color: var(--gold-deep);
-    font-size: 11px;
-    letter-spacing: 6px;
-    margin-bottom: 12px;
-  }
-  .cta {
-    text-align: center;
-    margin: 56px 0 24px;
-  }
-  .cta-line {
-    font-size: 15px;
-    color: var(--ink-soft);
-    margin-bottom: 10px;
-  }
-  .cta-pill {
-    display: inline-block;
-    padding: 14px 28px;
-    background: var(--ink);
-    color: var(--bg);
-    border-radius: 999px;
-    text-decoration: none;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    transition: transform 180ms ease;
-  }
-  .cta-pill:hover { transform: translateY(-1px); }
-  footer {
-    text-align: center;
-    padding: 40px 24px 0;
-    color: var(--ink-soft);
-    font-size: 13px;
-  }
-  footer a {
-    color: var(--peach-deep);
-    text-decoration: none;
-    margin: 0 10px;
-    font-weight: 600;
-  }
+  .pillar:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(58,31,63,0.10); }
+  .pillar .han { display: block; font-family: var(--kr); font-weight: 700; font-size: 11px; letter-spacing: .38em; color: var(--pink-text); margin-bottom: 12px; }
+  .pillar h3 { margin: 0 0 8px; font-size: 18px; letter-spacing: -0.005em; }
+  .pillar p { margin: 0; font-size: 14.5px; color: var(--quiet); }
+
+  .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .shot { background: var(--porcelain); border: 1px solid rgba(23,23,21,0.06); border-radius: 22px; padding: 12px 12px 14px; }
+  .shot img { width: 100%; height: auto; display: block; border-radius: 14px; }
+  .shot figcaption { margin: 12px 4px 0; font-size: 13px; color: var(--quiet); font-weight: 500; }
+  .shot figcaption b { color: var(--ink); display: block; font-size: 14px; }
+
+  .honest { background: var(--plum); color: #F7F1E8; border-radius: 28px; padding: 40px 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
+  .honest h3 { margin: 0 0 8px; font-size: 18px; color: #fff; }
+  .honest p { margin: 0; font-size: 14.5px; color: rgba(247,241,232,0.78); }
+  .honest .num { font-family: var(--serif); font-size: 40px; line-height: 1; color: var(--pink); margin-bottom: 10px; }
+
+  .final { text-align: center; padding: 72px 0 24px; }
+  .final h2 { margin-bottom: 14px; }
+  .price { color: var(--quiet); font-size: 14px; margin-top: 16px; }
+
+  footer { text-align: center; padding: 48px 24px 56px; color: var(--quiet); font-size: 13px; }
+  footer a { color: var(--pink-text); text-decoration: none; margin: 0 10px; font-weight: 600; }
   footer a:hover { text-decoration: underline; }
-  .seal {
-    margin-top: 24px;
-    font-family: "Noto Sans KR", serif;
-    color: var(--gold-deep);
-    font-weight: 700;
-    letter-spacing: 12px;
-    font-size: 13px;
+  .seal { margin-top: 22px; font-family: var(--kr); color: var(--pink-text); font-weight: 700; letter-spacing: 12px; font-size: 13px; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 36px; padding-top: 36px; text-align: center; }
+    .truth, .promise { margin-left: auto; margin-right: auto; }
+    .ctas { justify-content: center; }
+    .pillars { grid-template-columns: 1fr 1fr; }
+    .gallery { grid-template-columns: 1fr 1fr; }
+    .honest { grid-template-columns: 1fr; padding: 32px 26px; }
   }
+  @media (max-width: 560px) {
+    .pillars { grid-template-columns: 1fr; }
+    .wordmark .kr, .kicker .kr { display: none; }
+    .device { width: min(100%, 300px); }
+  }
+  @media (prefers-reduced-motion: reduce) { .btn, .pillar { transition: none; } .device { transform: none; } }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- Bok mascot -->
-  <svg class="mascot" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="body" cx="0.36" cy="0.28" r="0.82">
-        <stop offset="0" stop-color="#F7DBCE"/>
-        <stop offset="0.55" stop-color="#EDA899"/>
-        <stop offset="1" stop-color="#C76D79"/>
-      </radialGradient>
-      <linearGradient id="cleft" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#8C3E5C" stop-opacity="0.28"/>
-        <stop offset="1" stop-color="#8C3E5C" stop-opacity="0"/>
-      </linearGradient>
-      <radialGradient id="gloss" cx="0.30" cy="0.22" r="0.28">
-        <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.58"/>
-        <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
-      </radialGradient>
-      <linearGradient id="leaf" x1="0.1" y1="0.1" x2="0.9" y2="0.9">
-        <stop offset="0" stop-color="#A6BF8C"/>
-        <stop offset="0.55" stop-color="#7A9868"/>
-        <stop offset="1" stop-color="#4F6F40"/>
-      </linearGradient>
-    </defs>
-    <path d="M 512 195 C 512 165, 522 135, 552 112" stroke="#6B4A2F" stroke-width="18" stroke-linecap="round" fill="none"/>
-    <g transform="translate(618 118) rotate(28)">
-      <path d="M 0 0 C 40 -26, 120 -22, 160 14 C 130 42, 60 48, 0 0 Z" fill="url(#leaf)"/>
-    </g>
-    <path d="M 512 200 C 332 200, 140 320, 140 570 C 140 810, 295 955, 512 955 C 729 955, 884 810, 884 570 C 884 320, 692 200, 512 200 Z" fill="url(#body)"/>
-    <path d="M 512 215 Q 498 320, 512 440 Q 526 560, 512 625" stroke="url(#cleft)" stroke-width="14" stroke-linecap="round" fill="none"/>
-    <ellipse cx="356" cy="400" rx="160" ry="108" fill="url(#gloss)"/>
-    <path d="M 345 560 C 372 524, 422 524, 449 560" stroke="#3F1C2C" stroke-width="20" stroke-linecap="round" fill="none"/>
-    <path d="M 575 560 C 602 524, 652 524, 679 560" stroke="#3F1C2C" stroke-width="20" stroke-linecap="round" fill="none"/>
-    <path d="M 458 730 Q 512 758, 566 730" stroke="#3F1C2C" stroke-width="18" stroke-linecap="round" fill="none"/>
-    <circle cx="318" cy="680" r="42" fill="#B85C7A" fill-opacity="0.30"/>
-    <circle cx="706" cy="680" r="42" fill="#B85C7A" fill-opacity="0.30"/>
-  </svg>
+  <header>
+    <div class="bar">
+      <a class="brand" href="/" aria-label="Jineo home">
+        <!-- Bok — the mark, unchanged -->
+        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <radialGradient id="body" cx="0.36" cy="0.28" r="0.82"><stop offset="0" stop-color="#F7DBCE"/><stop offset="0.55" stop-color="#EDA899"/><stop offset="1" stop-color="#C76D79"/></radialGradient>
+            <radialGradient id="gloss" cx="0.30" cy="0.22" r="0.28"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.58"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+            <linearGradient id="leaf" x1="0.1" y1="0.1" x2="0.9" y2="0.9"><stop offset="0" stop-color="#A6BF8C"/><stop offset="0.55" stop-color="#7A9868"/><stop offset="1" stop-color="#4F6F40"/></linearGradient>
+          </defs>
+          <path d="M 512 195 C 512 165, 522 135, 552 112" stroke="#6B4A2F" stroke-width="18" stroke-linecap="round" fill="none"/>
+          <g transform="translate(618 118) rotate(28)"><path d="M 0 0 C 40 -26, 120 -22, 160 14 C 130 42, 60 48, 0 0 Z" fill="url(#leaf)"/></g>
+          <path d="M 512 200 C 332 200, 140 320, 140 570 C 140 810, 295 955, 512 955 C 729 955, 884 810, 884 570 C 884 320, 692 200, 512 200 Z" fill="url(#body)"/>
+          <ellipse cx="356" cy="400" rx="160" ry="108" fill="url(#gloss)"/>
+          <path d="M 345 560 C 372 524, 422 524, 449 560" stroke="#3F1C2C" stroke-width="20" stroke-linecap="round" fill="none"/>
+          <path d="M 575 560 C 602 524, 652 524, 679 560" stroke="#3F1C2C" stroke-width="20" stroke-linecap="round" fill="none"/>
+          <path d="M 458 730 Q 512 758, 566 730" stroke="#3F1C2C" stroke-width="18" stroke-linecap="round" fill="none"/>
+          <circle cx="318" cy="680" r="42" fill="#B85C7A" fill-opacity="0.30"/><circle cx="706" cy="680" r="42" fill="#B85C7A" fill-opacity="0.30"/>
+        </svg>
+        <span class="wordmark">JINEO<span class="kr">진어</span></span>
+      </a>
+      <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Get the app</a>
+    </div>
+  </header>
 
-  <div class="kicker">한 · 뷰티</div>
-  <h1>Fluent in Korean skincare,<br>finally on iPhone.</h1>
-  <p class="lede">Korean skincare AI for Americans. Skin Type 16, 12-tone Personal Color, honest 0–100 scores. Built on Korean beauty standards — real Korean brands, no generic quizzes.</p>
+  <!-- ── hero ── -->
+  <main>
+  <section class="hero" style="padding-top:44px">
+    <div>
+      <p class="kicker">10-second skin scan <span class="kr">한 · 뷰티</span></p>
+      <h1>Korean skincare,<br><em>decoded.</em></h1>
+      <p class="promise">Buy less. Choose better. Build a routine that works.</p>
+      <p class="truth">One selfie reads your skin — Skin Type 16, 12-tone Personal Color, water–oil map, pores and marks by zone — then scores real Korean products honestly. Scan any label. Every skin tone.</p>
+      <div class="ctas">
+        <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Free first scan on iPhone →</a>
+        <a class="btn btn-ghost" href="#see">See it work</a>
+      </div>
+      <p class="fine">Free first scan · Pro $5.99/wk or $79.99/yr · 3-day free trial on annual</p>
+    </div>
+    <div class="device-wrap">
+      <picture>
+        <source srcset="/assets/hero-device.webp" type="image/webp">
+        <img class="device" src="/assets/hero-device.webp" width="876" height="1219" alt="Jineo skin scan on iPhone — zone scores for forehead, T-zone and cheeks, hydration level, and an honest 0–100 glass-skin score" loading="eager">
+      </picture>
+      <span class="tag tag-a"><span class="dot"></span>Scan · about 10 seconds</span>
+      <span class="tag tag-b"><span class="dot"></span>Honest 0–100, no paid rankings</span>
+    </div>
+  </section>
 
-  <div class="badges">
-    <div class="badge">◆ Skin Type 16</div>
-    <div class="badge">◆ 12-tone Personal Color</div>
-    <div class="badge">◆ Hana K-beauty coach</div>
-    <div class="badge">◆ Routine Roast</div>
+  <div class="reads" aria-label="What the scan reads">
+    <span class="chip">Skin Type 16</span>
+    <span class="chip">12-tone Personal Color</span>
+    <span class="chip">Water–oil map</span>
+    <span class="chip">Pores · marks · redness by zone</span>
+    <span class="chip">Your gwang goal</span>
   </div>
 
-  <div class="pillars">
-    <div class="pillar">
-      <div class="han">스킨 타입 16 · 진단</div>
-      <h3>Your Korean Skin ID</h3>
-      <p>One selfie → your Skin Type 16 read — a 4-letter Korean skin identity (ORPT · "Korean Sunset") plus independent water-oil axes and your gwang goal. A skin read you'll actually want to share.</p>
+  <!-- ── pillars ── -->
+  <section>
+    <h2>What Jineo does</h2>
+    <p class="sub">Korean beauty standards, read against <em>your</em> skin — then applied to the products on the shelf in front of you.</p>
+    <div class="pillars">
+      <div class="pillar">
+        <span class="han">스킨 타입 16 · 진단</span>
+        <h3>Your Korean Skin ID</h3>
+        <p>One selfie → a 4-letter Skin Type 16 read, independent water and oil axes, and the gwang glow your skin can actually chase.</p>
+      </div>
+      <div class="pillar">
+        <span class="han">개인 컬러 · 12 톤</span>
+        <h3>Personal Color salon</h3>
+        <p>A salon-style 12-tone read — Spring / Summer / Autumn / Winter × Light / Bright / True / Mute / Deep — from the same selfie.</p>
+      </div>
+      <div class="pillar">
+        <span class="han">성분 스캔 · 라벨</span>
+        <h3>Scan any label</h3>
+        <p>Point the camera at an ingredient list. Each ingredient is graded against your profile — what matches your barrier today, and what doesn’t.</p>
+      </div>
+      <div class="pillar">
+        <span class="han">정직한 점수 · 0–100</span>
+        <h3>Honest scores, real brands</h3>
+        <p>120+ real Korean products — Beauty of Joseon, Anua, Cosrx, Sulwhasoo — scored 0–100 against your scan. Nobody can pay for a better number.</p>
+      </div>
+      <div class="pillar">
+        <span class="han">하나 · 코치</span>
+        <h3>Hana, your K-beauty coach</h3>
+        <p>Korean editorial standards and Hanbang tradition in chat: layering questions, first-serum picks, glass-skin plans — and a roast of the routine you paste in.</p>
+      </div>
+      <div class="pillar">
+        <span class="han">복 · 글로우 무비</span>
+        <h3>Bok, and your Glow Movie</h3>
+        <p>복 means luck. Your peach sidekick marks each ritual, keeps the streak honest, and turns your skin journey into a 6-second reel worth sending.</p>
+      </div>
     </div>
-    <div class="pillar">
-      <div class="han">개인 컬러 · 12 톤</div>
-      <h3>Personal Color salon</h3>
-      <p>A salon-style 12-tone personal-color read, free, from one selfie. Spring/Summer/Autumn/Winter × Light/Bright/True/Mute/Deep — your full palette and a matching Korean-beauty archetype.</p>
-    </div>
-    <div class="pillar">
-      <div class="han">하나 · 코치</div>
-      <h3>Hana — your K-beauty coach</h3>
-      <p>Korean editorial standards, deep ingredient knowledge, and Hanbang tradition. Real Korean brands only. Ask about layering, first serums, glass-skin plans — right in chat.</p>
-    </div>
-    <div class="pillar">
-      <div class="han">구합 진단 · 진단</div>
-      <h3>Routine Roast</h3>
-      <p>Paste your routine, Hana grades the layering — pH conflicts, active stacks, redundancy, optimal order. Your routine, read the way a Korean editor would.</p>
-    </div>
-    <div class="pillar">
-      <div class="han">정품 · 구매</div>
-      <h3>Authentic K-product Buy</h3>
-      <p>120+ real Korean brands — Beauty of Joseon, Anua, Cosrx, Sulwhasoo — matched to your scan, with links to Olive Young Global and counterfeit-spotting guidance. Real Korean brands, not "Korean-inspired."</p>
-    </div>
-    <div class="pillar">
-      <div class="han">복 · 친구</div>
-      <h3>Bok, your peach coach</h3>
-      <p>복 — Korean for luck. Your peach sidekick marks every ritual milestone so the daily routine stays a ritual, not a chore.</p>
-    </div>
-  </div>
+  </section>
 
-  <div class="cta">
-    <div class="cta-line">Available on the App Store.</div>
-    <a class="cta-pill" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Download Jineo →</a>
-    <div style="margin-top:12px; font-size:12px; color: var(--ink-soft); opacity: 0.78;">
-      Free first scan. Pro $9.99/wk or $79.99/yr (3-day free trial on annual).
+  <!-- ── see it ── -->
+  <section id="see">
+    <h2>See it, not a mock-up</h2>
+    <p class="sub">Real screens from the app on the App Store today.</p>
+    <div class="gallery">
+      <figure class="shot"><img src="/assets/shot-product.webp" width="720" height="961" alt="A Korean product scored against your skin profile" loading="lazy"><figcaption><b>Product, scored</b>Against your scan, not a paid ranking.</figcaption></figure>
+      <figure class="shot"><img src="/assets/shot-skintype.webp" width="720" height="1558" alt="Skin Type 16 result screen" loading="lazy"><figcaption><b>Skin Type 16</b>Your four letters, explained.</figcaption></figure>
+      <figure class="shot"><img src="/assets/shot-hana.webp" width="720" height="1558" alt="Hana coach chat screen" loading="lazy"><figcaption><b>Hana</b>Ask about layering, in plain language.</figcaption></figure>
+      <figure class="shot"><img src="/assets/shot-glow.webp" width="720" height="1558" alt="Glow Movie progress arc screen" loading="lazy"><figcaption><b>Glow Movie</b>Your journey, as a 6-second reel.</figcaption></figure>
     </div>
-  </div>
 
-  <div class="seal" style="text-align:center;">진</div>
+    <div class="honest">
+      <div><div class="num">0</div><h3>Paid placements</h3><p>No sponsored rankings, no brand can buy a score. The number is the number.</p></div>
+      <div><div class="num">1×</div><h3>Your selfie is analyzed once</h3><p>Then it’s gone — never stored on our servers, never sold.</p></div>
+      <div><div class="num">~10s</div><h3>Cosmetic signals, not a diagnosis</h3><p>Jineo reads skin signals and suggests cosmetic routines. It isn’t a medical device and doesn’t diagnose or treat anything.</p></div>
+    </div>
+  </section>
+
+  <!-- ── final CTA ── -->
+  <section class="final">
+    <h2>Stop guessing. <em style="font-style:normal;color:var(--pink)">Scan.</em></h2>
+    <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Download Jineo — free first scan →</a>
+    <p class="price">Pro $5.99/week or $79.99/year · 3-day free trial on annual · cancel anytime</p>
+    <div class="seal">진</div>
+  </section>
+  </main>
 
 </div>
 
